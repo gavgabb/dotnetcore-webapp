@@ -40,10 +40,10 @@ jobs:
           dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
            
       # SCA action
-      - name: Snyk
-        uses: snyk/actions/dotnet@master
-        env:
-          SNYK_TOKEN:  ${{  secrets.SNYK_TOKEN  }}
+      #- name: Snyk
+      #  uses: snyk/actions/dotnet@master
+      #  env:
+      #   SNYK_TOKEN:  ${{  secrets.SNYK_TOKEN  }}
     
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
