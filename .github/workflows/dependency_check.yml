@@ -1,0 +1,43 @@
+name: Dependency Check
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest   
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 500
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+      
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    # SUCCESS
+    - name: Dependency Check Scan
+      uses: sburris/dependency-check-action@v0.1-beta
+      with:
+        Project-Name: TestApp
+        # The directory path specified here is specific to inside the docker container
+        Report-Location: /github/workspace/dcReports
+        Report-Format: HTML
+        Log-Name: MyLog.txt
+             
+    # SUCCESS (to be used with above action)
+    - name: Upload report artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: dcReports
+        # This directory path is pointing to the same logical directory above but 
+        # outside the docker container
+        path: ${{ github.workspace }}/dcReports
+             
+     
+     #https://github.com/evanextreme/detect-secrets-action
+    - name: Detect Secrets
+      uses: evanextreme/detect-secrets-action@1.0.0
