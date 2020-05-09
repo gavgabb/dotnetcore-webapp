@@ -39,7 +39,10 @@ jobs:
           dotnet build --configuration Release
           dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
            
-      # SCA action
+      - name: trufflehog-actions-scan
+        uses: edplato/trufflehog-actions-scan@master
+        with:
+           scanArguments: "--regex --entropy=False --max_depth=5 --rules /regexes.json" # Add custom options here*# SCA action
       #- name: Snyk
       #  uses: snyk/actions/dotnet@master
       #  env:
