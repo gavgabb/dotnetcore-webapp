@@ -35,7 +35,7 @@ jobs:
       
       # SCA action
       - name: Snyk
-        uses: snyk/actions@0.1.1
+        uses: snyk/actions/dotnet@master
         env:
           SNYK_TOKEN:  ${{  secrets.SNYK_TOKEN  }}
 
